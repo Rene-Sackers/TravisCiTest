@@ -1,15 +1,23 @@
+
+dist: bionic
 language: csharp
-dotnet: 2.2
-solution: src/HelloWorld.sln
+mono: none
+dotnet: 2.2.105
 
 script:
-  - dotnet restore
-  - dotnet publish -c Release -r win-x64 --self-contained true
+  - dotnet restore src/HelloWorld.sln
+  - dotnet publish src/HelloWorld.sln -c Release -r win-x64 --self-contained true
+  - zip -r -j "Hello World.zip" ./src/HelloWorld/bin/Release/netcoreapp2.2/win-x64/publish/
+
+branches:
+  only:
+  - master
+  - /^v.*$/
 
 deploy:
   provider: releases
   skip_cleanup: true
-  file_glob: true
-  file: src/HelloWorld/bin/Release/netcoreapp2.2/win-x64/publish/**/*
+  api_key: $GITHUB_TOKEN
+  file: ./Hello World.zip
   on:
     tags: true
