@@ -9,10 +9,6 @@ script:
   - dotnet publish src/HelloWorld.sln -c Release -r win-x64 --self-contained true
   - zip -r -j "Hello World.zip" ./src/HelloWorld/bin/Release/netcoreapp2.2/win-x64/publish/
 
-branches:
-  only:
-  - master
-  - /^v.*$/
 
 deploy:
   provider: releases
